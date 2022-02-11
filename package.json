@@ -11,6 +11,8 @@
     "analyze": "npm run build && npm run analyze:only"
   },
   "dependencies": {
+    "@hookstate/core": "^3.0.13",
+    "@hookstate/persistence": "^3.0.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
