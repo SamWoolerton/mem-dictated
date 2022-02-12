@@ -24,8 +24,6 @@ export default function ViewPassage() {
         <div>No matching passage. </div>
       ) : (
         <>
-          <button onClick={remove}>Remove passage</button>
-
           {s.status === "loading" ? (
             <div>Loading...</div>
           ) : s.status === "error" ? (
@@ -33,6 +31,10 @@ export default function ViewPassage() {
           ) : (
             s.verses.map(v => <div key={v.verse}>{v.text}</div>)
           )}
+
+          <button onClick={remove} className="mt-4 warning">
+            Remove passage
+          </button>
         </>
       )}
     </div>
