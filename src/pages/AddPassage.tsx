@@ -88,16 +88,29 @@ export default function AddPassage() {
       <h2>Add passage</h2>
 
       <div className="flex flex-wrap my-2 -mx-2">
-        <div className="m-1 py-1 px-2 bg-gray-100 dark:bg-gray-800">
+        <div
+          className="m-1 px-2 h-8 rounded flex items-center justify-center bg-gray-100 dark:bg-gray-800"
+          onClick={() => state.set(s => ({ ...s, selected: "book" }))}
+          style={s.passage.book ? {} : { minWidth: "5em" }}
+        >
           {s.passage.book}
         </div>
-        <div className="m-1 py-1 px-2 bg-gray-100 dark:bg-gray-800">
+        <div
+          className="m-1 px-2 h-8 rounded flex items-center justify-center bg-gray-100 dark:bg-gray-800"
+          style={{ minWidth: "2em" }}
+        >
           {s.passage.chapter}
         </div>
-        <div className="m-1 py-1 px-2 bg-gray-100 dark:bg-gray-800">
+        <div
+          className="m-1 px-2 h-8 rounded flex items-center justify-center bg-gray-100 dark:bg-gray-800"
+          style={{ minWidth: "2em" }}
+        >
           {s.passage.startVerse}
         </div>
-        <div className="m-1 py-1 px-2 bg-gray-100 dark:bg-gray-800">
+        <div
+          className="m-1 px-2 h-8 rounded flex items-center justify-center bg-gray-100 dark:bg-gray-800"
+          style={{ minWidth: "2em" }}
+        >
           {s.passage.endVerse}
         </div>
       </div>
@@ -180,9 +193,9 @@ export default function AddPassage() {
       ) : null}
 
       <div>
-      <button onClick={addPassage} disabled={!validPassage}>
-        Add passage
-      </button>
+        <button onClick={addPassage} disabled={!validPassage}>
+          Add passage
+        </button>
       </div>
 
       <LinkText to="/passages">Back to all passages</LinkText>
