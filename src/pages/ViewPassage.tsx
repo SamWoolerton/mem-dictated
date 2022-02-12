@@ -1,8 +1,9 @@
 import { useState } from "@hookstate/core"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import globalState from "state"
 import usePassage from "hooks/usePassage"
+import LinkText from "components/LinkText"
 
 export default function ViewPassage() {
   const navigate = useNavigate()
@@ -17,7 +18,7 @@ export default function ViewPassage() {
   return (
     <div>
       <h2>View passage</h2>
-      <Link to="/passages">Back to all passages</Link>
+      <LinkText to="/passages">Back to all passages</LinkText>
 
       {!passage ? (
         <div>No matching passage. </div>

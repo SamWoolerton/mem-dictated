@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* general */
 html,
 body,
 #root {
@@ -17,10 +18,61 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* typography */
+/* per https://opensource.apple.com/source/dcerpc/dcerpc-61/www/content/css/blueprint/src/typography.css.auto.html */
+h1 {
+  font-size: 3em;
+  line-height: 1;
+  font-weight: bold;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+h2 {
+  font-size: 2em;
+  font-weight: bold;
+  margin-top: 0.75em;
+  margin-bottom: 0.75em;
+}
+
+h3 {
+  font-size: 1.5em;
+  line-height: 1;
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+h4 {
+  font-size: 1.2em;
+  line-height: 1.25;
+  font-weight: bold;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+h5 {
+  font-size: 1em;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+h6 {
+  font-size: 1em;
+}
+
+/* buttons */
 button:disabled {
   opacity: 0.7;
 }
 
+/* forms */
 textarea {
   display: block;
+}
+
+/* links */
+a.text-link {
+  @apply text-blue-500;
+  font-weight: bold;
 }

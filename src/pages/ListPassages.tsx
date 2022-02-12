@@ -1,5 +1,6 @@
 import { useState } from "@hookstate/core"
 import AddPassageLink from "components/AddPassageLink"
+import LinkText from "components/LinkText"
 import { Link } from "react-router-dom"
 import globalState from "state"
 
@@ -8,6 +9,7 @@ export default function ListPassages() {
 
   return (
     <div>
+      <h2>Your passages</h2>
       <AddPassageLink />
 
       <div>
@@ -23,7 +25,7 @@ export default function ListPassages() {
               </div>
             </Link>
 
-            <Link to={`/passages/${p.id}/attempt`}>Attempt</Link>
+            <LinkText to={`/passages/${p.id}/attempt`}>Attempt</LinkText>
           </div>
         ))}
       </div>

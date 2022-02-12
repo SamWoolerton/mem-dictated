@@ -6,6 +6,7 @@ import { books, counts } from "constants/bible"
 import globalState from "state"
 import { isPassage } from "utility/guards"
 import Tag from "components/Tag"
+import LinkText from "components/LinkText"
 
 const generateVerses = (n: number) => Array.from(Array(n)).map((_, i) => i + 1)
 
@@ -75,12 +76,11 @@ export default function AddPassage() {
       ? generateVerses(selectedBookCounts[s.passage.chapter - 1])
       : []
 
-  const returnToList = () => navigate("/passages")
   const addPassage = () => {
     if (!validPassage) return
     global.passages.set(p => [...p, passage])
 
-    returnToList()
+    navigate("/passages")
   }
 
   return (
@@ -179,10 +179,13 @@ export default function AddPassage() {
         </div>
       ) : null}
 
+      <div>
       <button onClick={addPassage} disabled={!validPassage}>
         Add passage
       </button>
-      <button onClick={returnToList}>Back to passages list</button>
+      </div>
+
+      <LinkText to="/passages">Back to all passages</LinkText>
     </div>
   )
 }

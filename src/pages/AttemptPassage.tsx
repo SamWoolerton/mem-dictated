@@ -1,8 +1,8 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
 import { diffWords } from "diff"
 
 import usePassage from "hooks/usePassage"
+import LinkText from "components/LinkText"
 
 type Diff = { type: "correct" | "extra" | "missing"; text: string }
 
@@ -26,7 +26,7 @@ export default function AttemptPassage() {
   return (
     <div>
       <h2>Attempt passage</h2>
-      <Link to="/passages">Back to all passages</Link>
+      <LinkText to="/passages">Back to all passages</LinkText>
 
       {!passage ? (
         <div>No matching passage. </div>

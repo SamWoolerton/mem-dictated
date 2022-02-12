@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom"
 import { Detector } from "react-detect-offline"
+
+import LinkText from "./LinkText"
 
 const linkText = "Add passage"
 
@@ -8,7 +9,7 @@ export default function AddPassageLink() {
     <Detector
       render={({ online }) =>
         online ? (
-          <Link to="/passages/add">{linkText}</Link>
+          <LinkText to="/passages/add">{linkText}</LinkText>
         ) : (
           <div onClick={() => alert("Can't add passages while offline")}>
             {linkText}
