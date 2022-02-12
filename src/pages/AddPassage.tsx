@@ -83,32 +83,58 @@ export default function AddPassage() {
     navigate("/passages")
   }
 
+  const inputClasses = {
+    base: "m-1 px-2 h-8 rounded flex items-center justify-center bg-gray-100 dark:bg-gray-800 border-2 ",
+    active: " border-blue-600 dark:border-blue-200 ",
+    inactive: " border-gray-100 dark:border-gray-800 ",
+  }
+
   return (
     <div>
       <h2>Add passage</h2>
 
       <div className="flex flex-wrap my-2 -mx-2">
         <div
-          className="m-1 px-2 h-8 rounded flex items-center justify-center bg-gray-100 dark:bg-gray-800"
+          className={
+            inputClasses.base +
+            (s.selected === "book"
+              ? inputClasses.active
+              : inputClasses.inactive)
+          }
           onClick={() => state.set(s => ({ ...s, selected: "book" }))}
           style={s.passage.book ? {} : { minWidth: "5em" }}
         >
           {s.passage.book}
         </div>
         <div
-          className="m-1 px-2 h-8 rounded flex items-center justify-center bg-gray-100 dark:bg-gray-800"
+          className={
+            inputClasses.base +
+            (s.selected === "chapter"
+              ? inputClasses.active
+              : inputClasses.inactive)
+          }
           style={{ minWidth: "2em" }}
         >
           {s.passage.chapter}
         </div>
         <div
-          className="m-1 px-2 h-8 rounded flex items-center justify-center bg-gray-100 dark:bg-gray-800"
+          className={
+            inputClasses.base +
+            (s.selected === "startVerse"
+              ? inputClasses.active
+              : inputClasses.inactive)
+          }
           style={{ minWidth: "2em" }}
         >
           {s.passage.startVerse}
         </div>
         <div
-          className="m-1 px-2 h-8 rounded flex items-center justify-center bg-gray-100 dark:bg-gray-800"
+          className={
+            inputClasses.base +
+            (s.selected === "endVerse"
+              ? inputClasses.active
+              : inputClasses.inactive)
+          }
           style={{ minWidth: "2em" }}
         >
           {s.passage.endVerse}
