@@ -32,7 +32,7 @@ h2 {
   font-size: 2em;
   font-weight: bold;
   margin-top: 0.75em;
-  margin-bottom: 0.75em;
+  margin-bottom: 0.25em;
 }
 
 h3 {
@@ -84,4 +84,9 @@ textarea {
 a.text-link {
   @apply text-blue-500;
   font-weight: bold;
+}
+
+/* custom */
+.bg-background {
+  @apply bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-300;
 }

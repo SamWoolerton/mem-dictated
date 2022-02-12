@@ -7,7 +7,7 @@ import ViewPassage from "pages/ViewPassage"
 
 function App() {
   return (
-    <div className="dark:bg-gray-900 dark:text-gray-300 h-full">
+    <div className="h-full bg-background">
       <div className="container mx-auto">
         <BrowserRouter>
           <Routes>
