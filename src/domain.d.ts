@@ -4,7 +4,8 @@ type Passage = {
   id: UUID
   book: Book
   chapter: number
-  verse: number
+  startVerse: number
+  endVerse: number
 }
 
 type Book =
@@ -29,7 +30,7 @@ type Book =
   | "Psalms"
   | "Proverbs"
   | "Ecclesiastes"
-  | "Song of Songs"
+  | "Song of Solomon"
   | "Isaiah"
   | "Jeremiah"
   | "Lamentations"
