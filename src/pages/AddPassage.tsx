@@ -85,15 +85,17 @@ export default function AddPassage() {
 
   const inputClasses = {
     base: "m-1 px-2 h-8 rounded flex items-center justify-center bg-gray-100 dark:bg-gray-800 border-2 ",
-    active: " border-blue-600 dark:border-blue-200 ",
-    inactive: " border-gray-100 dark:border-gray-800 ",
+    active: " border-blue-600 dark:border-blue-200 cursor-default ",
+    inactive: " border-gray-100 dark:border-gray-800 cursor-pointer ",
+    disabled: " border-gray-100 dark:border-gray-800 cursor-default ",
   }
 
   return (
     <div>
       <h2>Add passage</h2>
+      <LinkText to="/passages">Back to all passages</LinkText>
 
-      <div className="flex flex-wrap my-2 -mx-2">
+      <div className="flex flex-wrap my-4 -mx-2">
         <div
           className={
             inputClasses.base +
@@ -111,7 +113,24 @@ export default function AddPassage() {
             inputClasses.base +
             (s.selected === "chapter"
               ? inputClasses.active
-              : inputClasses.inactive)
+              : s.passage.book
+              ? inputClasses.inactive
+              : inputClasses.disabled)
+          }
+          onClick={() =>
+            state.set(s => {
+              // note explicit null check instead of coercion because 0 is a falsy number
+              if (s.passage.book === null) return s
+
+              // only included because of TS limitations
+              if (s.passage.chapter === null)
+                return { selected: "chapter", passage: s.passage }
+              // only have to include this check because of TS limitations, and can't even include with the previous step
+              if (s.passage.startVerse === null)
+                return { selected: "chapter", passage: s.passage }
+
+              return { selected: "chapter", passage: s.passage }
+            })
           }
           style={{ minWidth: "2em" }}
         >
@@ -122,7 +141,15 @@ export default function AddPassage() {
             inputClasses.base +
             (s.selected === "startVerse"
               ? inputClasses.active
-              : inputClasses.inactive)
+              : s.passage.chapter
+              ? inputClasses.inactive
+              : inputClasses.disabled)
+          }
+          onClick={() =>
+            state.set(s => {
+              if (s.passage.endVerse === null) return s
+              return { selected: "startVerse", passage: s.passage }
+            })
           }
           style={{ minWidth: "2em" }}
         >
@@ -133,7 +160,15 @@ export default function AddPassage() {
             inputClasses.base +
             (s.selected === "endVerse"
               ? inputClasses.active
-              : inputClasses.inactive)
+              : s.passage.endVerse
+              ? inputClasses.inactive
+              : inputClasses.disabled)
+          }
+          onClick={() =>
+            state.set(s => {
+              if (s.passage.endVerse === null) return s
+              return { selected: "endVerse", passage: s.passage }
+            })
           }
           style={{ minWidth: "2em" }}
         >
@@ -218,13 +253,11 @@ export default function AddPassage() {
         </div>
       ) : null}
 
-      <div>
-        <button onClick={addPassage} disabled={!validPassage}>
+      {validPassage && (
+        <button onClick={addPassage} className="mt-4">
           Add passage
         </button>
-      </div>
-
-      <LinkText to="/passages">Back to all passages</LinkText>
+      )}
     </div>
   )
 }
