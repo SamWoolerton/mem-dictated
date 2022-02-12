@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 
 import globalState from "state"
 import usePassage from "hooks/usePassage"
-import LinkText from "components/LinkText"
+import { LinkAllPassages } from "components/Links"
 
 export default function ViewPassage() {
   const navigate = useNavigate()
@@ -18,7 +18,7 @@ export default function ViewPassage() {
   return (
     <div>
       <h2>View passage</h2>
-      <LinkText to="/passages">Back to all passages</LinkText>
+      <LinkAllPassages />
 
       {!passage ? (
         <div>No matching passage. </div>

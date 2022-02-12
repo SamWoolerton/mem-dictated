@@ -1,8 +1,8 @@
 import { useState } from "@hookstate/core"
-import AddPassageLink from "components/AddPassageLink"
-import LinkText from "components/LinkText"
 import { Link } from "react-router-dom"
+
 import globalState from "state"
+import { LinkText, AddPassageLink } from "components/Links"
 
 export default function ListPassages() {
   const global = useState(globalState)

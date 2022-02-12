@@ -6,7 +6,7 @@ import { books, counts } from "constants/bible"
 import globalState from "state"
 import { isPassage } from "utility/guards"
 import Tag from "components/Tag"
-import LinkText from "components/LinkText"
+import { LinkAllPassages } from "components/Links"
 
 const generateVerses = (n: number) => Array.from(Array(n)).map((_, i) => i + 1)
 
@@ -93,7 +93,7 @@ export default function AddPassage() {
   return (
     <div>
       <h2>Add passage</h2>
-      <LinkText to="/passages">Back to all passages</LinkText>
+      <LinkAllPassages />
 
       <div className="flex flex-wrap my-4 -mx-2">
         <div
