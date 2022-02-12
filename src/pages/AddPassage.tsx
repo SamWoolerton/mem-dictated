@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid"
 import { books, counts } from "constants/bible"
 import globalState from "state"
 import { isPassage } from "utility/guards"
+import Tag from "components/Tag"
 
 const generateVerses = (n: number) => Array.from(Array(n)).map((_, i) => i + 1)
 
@@ -87,17 +88,25 @@ export default function AddPassage() {
       <h2>Add passage</h2>
 
       <div className="flex flex-wrap my-2 -mx-2">
-        <div className="m-1 p-1 bg-gray-100">{s.passage.book}</div>
-        <div className="m-1 p-1 bg-gray-100">{s.passage.chapter}</div>
-        <div className="m-1 p-1 bg-gray-100">{s.passage.startVerse}</div>
-        <div className="m-1 p-1 bg-gray-100">{s.passage.endVerse}</div>
+        <div className="m-1 py-1 px-2 bg-gray-100 dark:bg-gray-800">
+          {s.passage.book}
+        </div>
+        <div className="m-1 py-1 px-2 bg-gray-100 dark:bg-gray-800">
+          {s.passage.chapter}
+        </div>
+        <div className="m-1 py-1 px-2 bg-gray-100 dark:bg-gray-800">
+          {s.passage.startVerse}
+        </div>
+        <div className="m-1 py-1 px-2 bg-gray-100 dark:bg-gray-800">
+          {s.passage.endVerse}
+        </div>
       </div>
 
       {s.selected === "book" ? (
         <div className="flex flex-wrap my-2 -mx-2">
           {books.map(book => (
-            <div
-              className="m-1 p-1 cursor-pointer bg-gray-100"
+            <Tag
+              label={book}
               onClick={() =>
                 state.set({
                   selected: "chapter",
@@ -111,9 +120,7 @@ export default function AddPassage() {
                 })
               }
               key={book}
-            >
-              {book}
-            </div>
+            />
           ))}
         </div>
       ) : s.selected === "chapter" ? (
@@ -121,8 +128,8 @@ export default function AddPassage() {
           {selectedBookCounts.map((_, i) => {
             const chapter = i + 1
             return (
-              <div
-                className="m-1 p-1 cursor-pointer bg-gray-100"
+              <Tag
+                label={String(chapter)}
                 onClick={() =>
                   state.set({
                     selected: "startVerse",
@@ -136,9 +143,7 @@ export default function AddPassage() {
                   })
                 }
                 key={chapter}
-              >
-                {chapter}
-              </div>
+              />
             )
           })}
         </div>
@@ -150,8 +155,8 @@ export default function AddPassage() {
               s.selected === "endVerse" ? v >= s.passage.startVerse : true
             )
             .map(verse => (
-              <div
-                className="m-1 p-1 cursor-pointer bg-gray-100"
+              <Tag
+                label={String(verse)}
                 onClick={() =>
                   state.set({
                     selected: "endVerse",
@@ -169,9 +174,7 @@ export default function AddPassage() {
                   })
                 }
                 key={verse}
-              >
-                {verse}
-              </div>
+              />
             ))}
         </div>
       ) : null}
