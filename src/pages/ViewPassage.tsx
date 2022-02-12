@@ -1,45 +1,23 @@
 import { useState } from "@hookstate/core"
-import { useEffect } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom"
-import globalState from "state"
+import { Link, useNavigate } from "react-router-dom"
 
-type State =
-  | { status: "loading" }
-  | { status: "error" }
-  | { status: "loaded"; verses: { verse: string; text: string }[] }
+import globalState from "state"
+import usePassage from "hooks/usePassage"
 
 export default function ViewPassage() {
   const navigate = useNavigate()
-  let params = useParams<"passage">()
   const global = useState(globalState)
-  const state = useState({ status: "loading" } as State)
-  const s = state.get()
-
-  const passages = global.passages.get()
-  const passage = passages.find(p => p.id === params.passage)
-
-  useEffect(() => {
-    if (!passage) return
-
-    fetch(`/kjv/${passage.book}_${passage.chapter}.json`)
-      .then(res => res.json())
-      .then(ls => state.set({ status: "loaded", verses: ls }))
-      .catch(err => {
-        console.error(err)
-        state.set({ status: "error" })
-      })
-    // eslint-disable-next-line
-  }, [])
+  const { state: s, passage } = usePassage()
 
   const remove = () => {
-    global.passages.set(passages.filter(p => p.id !== params.passage))
+    global.passages.set(passages => passages.filter(p => p.id !== passage?.id))
     navigate("/passages")
   }
 
   return (
     <div>
       <h2>View passage</h2>
-      <Link to="/passages">View all passages</Link>
+      <Link to="/passages">Back to all passages</Link>
 
       {!passage ? (
         <div>No matching passage. </div>
