@@ -61,6 +61,7 @@
     ]
   },
   "devDependencies": {
+    "@types/diff": "^5.0.2",
     "@types/react-detect-offline": "^2.4.1",
     "@types/uuid": "^8.3.4",
     "autoprefixer": "^10.4.2",
