@@ -8,6 +8,8 @@ type Passage = {
   endVerse: number
 }
 
+type Version = "kjv"
+
 type Book =
   | "Genesis"
   | "Exodus"
