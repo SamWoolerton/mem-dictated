@@ -77,3 +77,21 @@ type Book =
   | "3 John"
   | "Jude"
   | "Revelation"
+
+type ChapterSection =
+  | {
+      type:
+        | "paragraph start"
+        | "paragraph end"
+        | "stanza start"
+        | "stanza end"
+        | "line break"
+        | "break"
+    }
+  | {
+      type: "paragraph text" | "line text"
+      chapterNumber: number
+      verseNumber: number
+      sectionNumber: number
+      value: string
+    }

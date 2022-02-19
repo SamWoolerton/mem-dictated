@@ -1,20 +1,20 @@
 import { useState } from "react"
 import { diffWords } from "diff"
 
-import usePassage from "hooks/usePassage"
+import usePassageText from "hooks/usePassageText"
 import { LinkAllPassages } from "components/Links"
 
 type Diff = { type: "correct" | "extra" | "missing"; text: string }
 
 export default function AttemptPassage() {
-  const { state: s, passage } = usePassage()
+  const { state: s, passage } = usePassageText()
   const [attempt, setAttempt] = useState("")
   const [diff, setDiff] = useState([] as Diff[])
 
   const check = () => {
     if (s.status !== "loaded") return
 
-    const actual = s.verses.map(v => v.text).join(" ")
+    const actual = s.text
     setDiff(
       diffWords(actual, attempt).map(({ value, added, removed }) => ({
         text: value,

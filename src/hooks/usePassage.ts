@@ -7,9 +7,9 @@ import globalState from "state"
 export type State =
   | { status: "loading" }
   | { status: "error" }
-  | { status: "loaded"; verses: { verse: number; text: string }[] }
+  | { status: "loaded"; sections: ChapterSection[] }
 
-export default function usePassage() {
+export default function usePassage(): { state: State; passage?: Passage } {
   let params = useParams<"passage">()
   const global = useState(globalState)
   const state = useState({ status: "loading" } as State)
@@ -21,22 +21,29 @@ export default function usePassage() {
   useEffect(() => {
     if (!passage) return
 
-    fetch(`/kjv/${passage.book}_${passage.chapter}.json`)
+    fetch(`/web_bible/${passage.book}_${passage.chapter}.json`)
       .then(res => res.json())
-      .then((ls: { verse: string; text: string }[]) =>
+      .then((sections: ChapterSection[]) => {
+        const { filtered } = sections.reduce(
+          (acc, s) => {
+            if (s.type === "paragraph text" || s.type === "line text") {
+              acc.verse = s.verseNumber
+            }
+            if (
+              acc.verse >= passage.startVerse &&
+              acc.verse <= passage.endVerse
+            )
+              acc.filtered.push(s)
+            return acc
+          },
+          { filtered: [] as ChapterSection[], verse: 0 }
+        )
+
         state.set({
           status: "loaded",
-          verses: ls
-            .map(v => ({
-              verse: Number(v.verse),
-              text: v.text,
-            }))
-            .filter(
-              ({ verse }) =>
-                verse >= passage.startVerse && verse <= passage.endVerse
-            ),
+          sections: filtered,
         })
-      )
+      })
       .catch(err => {
         console.error(err)
         state.set({ status: "error" })

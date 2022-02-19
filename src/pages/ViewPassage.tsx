@@ -2,13 +2,13 @@ import { useState } from "@hookstate/core"
 import { useNavigate } from "react-router-dom"
 
 import globalState from "state"
-import usePassage from "hooks/usePassage"
+import usePassageText from "hooks/usePassageText"
 import { LinkAllPassages } from "components/Links"
 
 export default function ViewPassage() {
   const navigate = useNavigate()
   const global = useState(globalState)
-  const { state: s, passage } = usePassage()
+  const { state: s, passage } = usePassageText()
 
   const remove = () => {
     global.passages.set(passages => passages.filter(p => p.id !== passage?.id))
@@ -29,7 +29,7 @@ export default function ViewPassage() {
           ) : s.status === "error" ? (
             <div>Error loading passage.</div>
           ) : (
-            s.verses.map(v => <div key={v.verse}>{v.text}</div>)
+            <div>{s.text}</div>
           )}
 
           <button onClick={remove} className="mt-4 warning">
