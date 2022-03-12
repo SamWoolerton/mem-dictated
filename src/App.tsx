@@ -1,36 +1,31 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
-import { useTheme } from "hooks/useTheme"
 import AddPassage from "pages/AddPassage"
 import AttemptPassage from "pages/AttemptPassage"
 import ListPassages from "pages/ListPassages"
 import ViewPassage from "pages/ViewPassage"
+import { useDarkMode } from "hooks/useDarkMode"
 
 function App() {
-  const theme = useTheme()
+  useDarkMode()
 
   return (
-    <main
-      style={{ backgroundColor: theme.screen }}
-      className={`h-full ${theme.mode}`}
-    >
-      <div className="container mx-auto">
-        <BrowserRouter>
-          <Routes>
-            <Route path="/">
+    <main className="container mx-auto pb-4">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/">
+            <Route index element={<ListPassages />} />
+            <Route path="passages">
               <Route index element={<ListPassages />} />
-              <Route path="passages">
-                <Route index element={<ListPassages />} />
-                <Route path=":passage">
-                  <Route index element={<ViewPassage />} />
-                  <Route path="attempt" element={<AttemptPassage />} />
-                </Route>
-                <Route path="add" element={<AddPassage />} />
+              <Route path=":passage">
+                <Route index element={<ViewPassage />} />
+                <Route path="attempt" element={<AttemptPassage />} />
               </Route>
+              <Route path="add" element={<AddPassage />} />
             </Route>
-          </Routes>
-        </BrowserRouter>
-      </div>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </main>
   )
 }

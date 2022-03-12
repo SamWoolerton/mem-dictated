@@ -19,16 +19,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
   /* semibold */
   font-weight: 600;
+
+  background-color: #61b8e8;
 }
 
-main.dark {
+body.dark {
   color: white;
+  background-color: #194e6d;
 }
 
 /* layout */
 /* overriding default Tailwind container styles */
 .container {
-  padding: 0 1em;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 @media (min-width: 1024px) {
