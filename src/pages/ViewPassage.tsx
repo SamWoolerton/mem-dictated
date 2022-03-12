@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom"
 
 import globalState from "state"
 import usePassageText from "hooks/usePassageText"
-import { LinkAllPassages } from "components/Links"
+import { Button, Card, Header, PageHeading } from "components/Themed"
+import { formatPassage } from "utility/domain"
 
 export default function ViewPassage() {
   const navigate = useNavigate()
@@ -17,26 +18,34 @@ export default function ViewPassage() {
 
   return (
     <div>
-      <h2>View passage</h2>
-      <LinkAllPassages />
+      <Header />
 
-      {!passage ? (
-        <div>No matching passage. </div>
-      ) : (
-        <>
-          {s.status === "loading" ? (
-            <div>Loading...</div>
-          ) : s.status === "error" ? (
-            <div>Error loading passage.</div>
-          ) : (
-            <div>{s.text}</div>
-          )}
+      <Card>
+        <PageHeading>
+          {passage ? formatPassage(passage) : "View passage"}
+        </PageHeading>
 
-          <button onClick={remove} className="mt-4 warning">
-            Remove passage
-          </button>
-        </>
-      )}
+        {!passage ? (
+          <div>No matching passage. </div>
+        ) : (
+          <>
+            {s.status === "loading" ? (
+              <div>Loading...</div>
+            ) : s.status === "error" ? (
+              <div>Error loading passage.</div>
+            ) : (
+              <div>{s.text}</div>
+            )}
+
+            <Button
+              label="Remove passage"
+              onClick={remove}
+              type="danger"
+              style={{ marginTop: "1.5em" }}
+            />
+          </>
+        )}
+      </Card>
     </div>
   )
 }

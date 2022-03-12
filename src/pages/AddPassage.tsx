@@ -6,7 +6,7 @@ import { books, counts } from "constants/bible"
 import globalState from "state"
 import { isPassage } from "utility/guards"
 import Tag from "components/Tag"
-import { LinkAllPassages } from "components/Links"
+import { Button, Header, PageHeading } from "components/Themed"
 
 const generateVerses = (n: number) => Array.from(Array(n)).map((_, i) => i + 1)
 
@@ -84,7 +84,7 @@ export default function AddPassage() {
   }
 
   const inputClasses = {
-    base: "m-1 px-2 h-8 rounded flex items-center justify-center bg-gray-100 dark:bg-gray-800 border-2 ",
+    base: "m-1 px-2 h-8 rounded flex items-center justify-center bg-white dark:bg-gray-800 border-2 ",
     active: " border-blue-600 dark:border-blue-200 cursor-default ",
     inactive: " border-gray-100 dark:border-gray-800 cursor-pointer ",
     disabled: " border-gray-100 dark:border-gray-800 cursor-default ",
@@ -92,8 +92,9 @@ export default function AddPassage() {
 
   return (
     <div>
-      <h2>Add passage</h2>
-      <LinkAllPassages />
+      <Header />
+
+      <PageHeading>Add passage</PageHeading>
 
       <div className="flex flex-wrap my-4 -mx-2">
         <div
@@ -254,9 +255,11 @@ export default function AddPassage() {
       ) : null}
 
       {validPassage && (
-        <button onClick={addPassage} className="mt-4">
-          Add passage
-        </button>
+        <Button
+          label="Add passage"
+          onClick={addPassage}
+          style={{ marginTop: "1.5em" }}
+        />
       )}
     </div>
   )

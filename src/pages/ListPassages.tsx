@@ -1,32 +1,48 @@
 import { useState } from "@hookstate/core"
 import { Link } from "react-router-dom"
+import { HiChevronDoubleRight } from "react-icons/hi"
+import { Detector } from "react-detect-offline"
 
 import globalState from "state"
-import { LinkText, AddPassageLink } from "components/Links"
+import { Header, Card, LinkButton, LinkIconButton } from "components/Themed"
+import { formatPassage } from "utility/domain"
 
 export default function ListPassages() {
   const global = useState(globalState)
 
   return (
     <div>
-      <h2>Your passages</h2>
-      <AddPassageLink />
+      <Header showBack={false} />
+
+      <Detector
+        render={({ online }) => (
+          <LinkButton
+            label={online ? "Add passage" : "Can't add passage while offline"}
+            to="/passages/add"
+            disabled={!online}
+          />
+        )}
+      />
 
       <div>
         {global.passages.get().map(p => (
-          <div key={p.id} className="flex">
-            <Link to={`/passages/${p.id}`} className="flex">
-              <div>{p.book}</div>
-              <div>{p.chapter}</div>
-              <div>
-                {p.startVerse === p.endVerse
-                  ? p.startVerse
-                  : `${p.startVerse}:${p.endVerse}`}
-              </div>
-            </Link>
+          <Link key={p.id} to={`/passages/${p.id}`}>
+            <Card
+              style={{
+                marginTop: 20,
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <div style={{ fontSize: 20 }}>{formatPassage(p)}</div>
 
-            <LinkText to={`/passages/${p.id}/attempt`}>Attempt</LinkText>
-          </div>
+              <LinkIconButton
+                to={`/passages/${p.id}/attempt`}
+                Icon={HiChevronDoubleRight}
+              />
+            </Card>
+          </Link>
         ))}
       </div>
     </div>

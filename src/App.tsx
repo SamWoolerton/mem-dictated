@@ -1,13 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
+import { useTheme } from "hooks/useTheme"
 import AddPassage from "pages/AddPassage"
 import AttemptPassage from "pages/AttemptPassage"
 import ListPassages from "pages/ListPassages"
 import ViewPassage from "pages/ViewPassage"
 
 function App() {
+  const theme = useTheme()
+
   return (
-    <div className="h-full bg-background">
+    <main
+      style={{ backgroundColor: theme.screen }}
+      className={`h-full ${theme.mode}`}
+    >
       <div className="container mx-auto">
         <BrowserRouter>
           <Routes>
@@ -25,7 +31,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </div>
-    </div>
+    </main>
   )
 }
 
