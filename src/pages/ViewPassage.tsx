@@ -29,9 +29,8 @@ export default function ViewPassage() {
           <div>No matching passage. </div>
         ) : (
           <>
-            {s.status === "loading" ? (
-              <div>Loading...</div>
-            ) : s.status === "error" ? (
+            {/* passages are cached locally so loading animation just causes a screen flicker */}
+            {s.status === "loading" ? null : s.status === "error" ? (
               <div>Error loading passage.</div>
             ) : (
               <div>{s.text}</div>

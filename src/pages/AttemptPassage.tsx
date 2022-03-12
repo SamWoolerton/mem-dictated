@@ -39,9 +39,8 @@ export default function AttemptPassage() {
           <div>No matching passage. </div>
         ) : (
           <>
-            {s.status === "loading" ? (
-              <div>Loading...</div>
-            ) : s.status === "error" ? (
+            {/* passages are cached locally so loading animation just causes a screen flicker */}
+            {s.status === "loading" ? null : s.status === "error" ? (
               <div>Error loading passage.</div>
             ) : diff.length === 0 ? (
               <div>
