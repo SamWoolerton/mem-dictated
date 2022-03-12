@@ -84,10 +84,11 @@ export default function AddPassage() {
   }
 
   const inputClasses = {
-    base: "m-1 px-2 h-8 rounded flex items-center justify-center bg-white dark:bg-gray-800 border-2 ",
-    active: " border-blue-600 dark:border-blue-200 cursor-default ",
-    inactive: " border-gray-100 dark:border-gray-800 cursor-pointer ",
-    disabled: " border-gray-100 dark:border-gray-800 cursor-default ",
+    base: "m-1 px-2 h-8 rounded flex items-center justify-center bg-l_card dark:bg-d_card border-2 ",
+    active:
+      " border-l_actionBackground dark:border-d_actionBackground cursor-default ",
+    inactive: " border-l_card dark:border-d_card cursor-pointer ",
+    disabled: " border-l_card dark:border-d_card cursor-default ",
   }
 
   return (
@@ -212,8 +213,8 @@ export default function AddPassage() {
                       ...s.passage,
                       book: s.passage.book,
                       chapter,
-                      startVerse: null,
-                      endVerse: null,
+                      startVerse: 1,
+                      endVerse: selectedBookCounts[chapter - 1],
                     },
                   })
                 }

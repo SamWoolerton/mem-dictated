@@ -1,6 +1,7 @@
 import { usePrefersDarkMode } from "./usePrefersDarkMode"
 
-const theme = {
+// note that this needs to be manually kept in sync with `tailwind.config.js`
+export const theme = {
   light: {
     mode: "light" as "light",
     screen: "#61B8E8",

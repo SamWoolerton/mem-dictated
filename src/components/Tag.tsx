@@ -7,7 +7,7 @@ export default function Tag({
 }) {
   return (
     <div
-      className="m-1 p-1 cursor-pointer rounded bg-white dark:bg-gray-800 dark:text-gray-300"
+      className="m-1 px-2 py-1 cursor-pointer rounded bg-l_card dark:bg-d_card"
       onClick={onClick}
     >
       {label}
