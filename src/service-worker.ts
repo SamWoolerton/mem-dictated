@@ -12,7 +12,11 @@ import { clientsClaim } from "workbox-core"
 import { ExpirationPlugin } from "workbox-expiration"
 import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching"
 import { registerRoute } from "workbox-routing"
-import { StaleWhileRevalidate } from "workbox-strategies"
+import {
+  StaleWhileRevalidate,
+  NetworkFirst,
+  CacheFirst,
+} from "workbox-strategies"
 
 declare const self: ServiceWorkerGlobalScope
 
@@ -79,3 +83,11 @@ self.addEventListener("message", event => {
 })
 
 // Any other custom service worker logic can go here.
+
+// App code should fetch updates if available and fall back to cache if offline
+registerRoute(/\.(?:js|css|html)$/, new NetworkFirst())
+// Cache Bible chapters as they're not going to change (for a given version)
+registerRoute(
+  /(?:bible|esv|kjv)\/.?+\.json$/,
+  new CacheFirst({ plugins: [new ExpirationPlugin({ maxEntries: 100 })] })
+)
