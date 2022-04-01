@@ -88,6 +88,6 @@ self.addEventListener("message", event => {
 registerRoute(/\.(?:js|css|html)$/, new NetworkFirst())
 // Cache Bible chapters as they're not going to change (for a given version)
 registerRoute(
-  /(?:bible|esv|kjv)\/.?+\.json$/,
+  /^\/\.netlify\/functions\/esv/,
   new CacheFirst({ plugins: [new ExpirationPlugin({ maxEntries: 100 })] })
 )

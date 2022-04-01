@@ -3,16 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "dev": "netlify dev",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "analyze:only": "source-map-explorer 'build/static/js/*.js'",
-    "analyze": "npm run build && npm run analyze:only"
+    "analyze": "npm run build && npm run analyze:only",
+    "typecheck": "tsc -p ."
   },
   "dependencies": {
     "@hookstate/core": "^3.0.13",
     "@hookstate/persistence": "^3.0.0",
+    "@netlify/functions": "^1.0.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -23,10 +26,12 @@
     "diff": "^5.0.0",
     "lottie-react": "^2.2.1",
     "lottie-web": "^5.9.1",
+    "node-fetch": "^3.2.3",
     "react": "^17.0.2",
     "react-detect-offline": "^2.4.5",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
+    "react-markdown": "^8.0.2",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
     "typescript": "^4.5.5",

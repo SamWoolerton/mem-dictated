@@ -6,7 +6,7 @@ import { books, counts } from "constants/bible"
 import globalState from "state"
 import { isPassage } from "utility/guards"
 import Tag from "components/Tag"
-import { Button, Header, PageHeading } from "components/Themed"
+import { Button, Page, PageHeading } from "components/Themed"
 
 const generateVerses = (n: number) => Array.from(Array(n)).map((_, i) => i + 1)
 
@@ -92,9 +92,7 @@ export default function AddPassage() {
   }
 
   return (
-    <div>
-      <Header />
-
+    <Page>
       <PageHeading>Add passage</PageHeading>
 
       <div className="flex flex-wrap my-4 -mx-2">
@@ -262,6 +260,6 @@ export default function AddPassage() {
           style={{ marginTop: "1.5em" }}
         />
       )}
-    </div>
+    </Page>
   )
 }

@@ -7,7 +7,7 @@ import globalState from "state"
 export type State =
   | { status: "loading" }
   | { status: "error" }
-  | { status: "loaded"; sections: ChapterSection[] }
+  | { status: "loaded"; text: string }
 
 export default function usePassage(): { state: State; passage?: Passage } {
   let params = useParams<"passage">()
@@ -21,28 +21,14 @@ export default function usePassage(): { state: State; passage?: Passage } {
   useEffect(() => {
     if (!passage) return
 
-    fetch(`/web_bible/${passage.book}_${passage.chapter}.json`)
-      .then(res => res.json())
-      .then((sections: ChapterSection[]) => {
-        const { filtered } = sections.reduce(
-          (acc, s) => {
-            if (s.type === "paragraph text" || s.type === "line text") {
-              acc.verse = s.verseNumber
-            }
-            if (
-              acc.verse >= passage.startVerse &&
-              acc.verse <= passage.endVerse
-            )
-              acc.filtered.push(s)
-            return acc
-          },
-          { filtered: [] as ChapterSection[], verse: 0 }
-        )
+    const queryParams = Object.entries(passage)
+      .map(([k, v]) => `${k}=${v}`)
+      .join("&")
 
-        state.set({
-          status: "loaded",
-          sections: filtered,
-        })
+    fetch(`/.netlify/functions/esv?${queryParams}`)
+      .then(res => res.json())
+      .then(text => {
+        state.set({ status: "loaded", text })
       })
       .catch(err => {
         console.error(err)

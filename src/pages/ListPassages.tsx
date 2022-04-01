@@ -4,16 +4,14 @@ import { HiChevronDoubleRight } from "react-icons/hi"
 import { Detector } from "react-detect-offline"
 
 import globalState from "state"
-import { Header, Card, LinkButton, LinkIconButton } from "components/Themed"
+import { Card, LinkButton, LinkIconButton, Page } from "components/Themed"
 import { formatPassage } from "utility/domain"
 
 export default function ListPassages() {
   const global = useState(globalState)
 
   return (
-    <div>
-      <Header showBack={false} />
-
+    <Page>
       <Detector
         render={({ online }) => (
           <LinkButton
@@ -45,6 +43,6 @@ export default function ListPassages() {
           </Link>
         ))}
       </div>
-    </div>
+    </Page>
   )
 }

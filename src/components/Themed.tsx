@@ -173,12 +173,32 @@ export function Header({ showBack = true }: { showBack?: boolean }) {
   return (
     <div className="flex justify-between items-center">
       <div style={blockStyle}>{showBack && <LinkBackIcon />}</div>
-      <HeaderLogo />
+      <Link to="/">
+        <HeaderLogo />
+      </Link>
       <div style={blockStyle} />
     </div>
   )
 }
 
-export const PageHeading = ({ children }: { children: string }) => (
+export const PageHeading = ({ children }: { children: ReactNode }) => (
   <h2 className="mt-0">{children}</h2>
 )
+
+export const Footer = () => (
+  <Link to="/copyright" className="mt-auto mx-auto py-4 text-white">
+    Copyright
+  </Link>
+)
+
+export const Page = ({ children }: { children: ReactNode }) => {
+  return (
+    <>
+      <Header />
+
+      <main className="container mx-auto pb-8">{children}</main>
+
+      <Footer />
+    </>
+  )
+}

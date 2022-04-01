@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { diffWords } from "diff"
 
-import usePassageText from "hooks/usePassageText"
-import { Button, Card, Header, PageHeading } from "components/Themed"
+import usePassage from "hooks/usePassage"
+import { Button, Card, Page, PageHeading } from "components/Themed"
 import { formatPassage } from "utility/domain"
 import { useTheme } from "hooks/useTheme"
 
@@ -10,7 +10,7 @@ type Diff = { type: "correct" | "extra" | "missing"; text: string }
 
 export default function AttemptPassage() {
   const theme = useTheme()
-  const { state: s, passage } = usePassageText()
+  const { state: s, passage } = usePassage()
   const [attempt, setAttempt] = useState("")
   const [diff, setDiff] = useState([] as Diff[])
 
@@ -27,12 +27,11 @@ export default function AttemptPassage() {
   }
 
   return (
-    <div>
-      <Header />
-
+    <Page>
       <Card>
         <PageHeading>
           {passage ? formatPassage(passage) : "Attempt passage"}
+          <span className="text-base ml-2 opacity-70 font-bold">ESV</span>
         </PageHeading>
 
         {!passage ? (
@@ -77,6 +76,6 @@ export default function AttemptPassage() {
           </>
         )}
       </Card>
-    </div>
+    </Page>
   )
 }

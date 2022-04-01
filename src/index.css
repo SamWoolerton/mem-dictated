@@ -9,6 +9,11 @@ body,
   height: 100%;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
 body {
   margin: 0;
   /* Fall back to system font stack while waiting for Source Sans Pro to load */
@@ -112,4 +117,8 @@ a.text-link {
 /* custom */
 .bg-background {
   @apply bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-300;
+}
+
+.passage-container p {
+  margin-bottom: 0.5em;
 }
