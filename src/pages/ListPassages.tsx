@@ -11,7 +11,7 @@ export default function ListPassages() {
   const global = useState(globalState)
 
   return (
-    <Page>
+    <Page showBackButton={false}>
       <Detector
         render={({ online }) => (
           <LinkButton

@@ -171,7 +171,7 @@ export function Header({ showBack = true }: { showBack?: boolean }) {
   const blockStyle = { width: "2.5em" }
 
   return (
-    <div className="flex justify-between items-center">
+    <div className="container mx-auto flex justify-between items-center">
       <div style={blockStyle}>{showBack && <LinkBackIcon />}</div>
       <Link to="/">
         <HeaderLogo />
@@ -191,10 +191,16 @@ export const Footer = () => (
   </Link>
 )
 
-export const Page = ({ children }: { children: ReactNode }) => {
+export const Page = ({
+  showBackButton = true,
+  children,
+}: {
+  showBackButton?: boolean
+  children: ReactNode
+}) => {
   return (
     <>
-      <Header />
+      <Header showBack={showBackButton} />
 
       <main className="container mx-auto pb-8">{children}</main>
 
