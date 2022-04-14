@@ -122,3 +122,8 @@ a.text-link {
 .passage-container p {
   margin-bottom: 0.5em;
 }
+
+.passage-container pre,
+.passage-container code {
+  font-family: inherit;
+}
