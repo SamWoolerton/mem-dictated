@@ -8,9 +8,10 @@ type Passage = {
   chapter: number
   startVerse: number
   endVerse: number
-  lastAttempted: DateTime
-  lastScore: number
-  secondsSincePreviousAttempt: number
+  lastAttemptAt: DateTime | null
+  nextAttemptAt: DateTime
+  // 0-100
+  lastScore: number | null
 }
 
 type PassageVersion =

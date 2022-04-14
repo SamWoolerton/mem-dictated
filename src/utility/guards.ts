@@ -7,9 +7,7 @@ export function isValidPassage(
     p.chapter &&
     p.startVerse &&
     p.endVerse &&
-    p.lastAttempted &&
-    p.lastScore !== null &&
-    p.secondsSincePreviousAttempt !== null
+    p.nextAttemptAt
   )
 }
 

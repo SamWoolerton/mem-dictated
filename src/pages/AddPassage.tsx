@@ -33,9 +33,9 @@ export default function AddPassage() {
       chapter: null as number | null,
       startVerse: null as number | null,
       endVerse: null as number | null,
-      lastAttempted: new Date().toISOString(),
-      lastScore: 0,
-      secondsSincePreviousAttempt: 0,
+      lastAttemptAt: null,
+      nextAttemptAt: new Date().toISOString(),
+      lastScore: null,
     },
   } as PartialPassage)
 
