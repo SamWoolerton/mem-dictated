@@ -2,7 +2,7 @@ import { useState } from "@hookstate/core"
 import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 
-import globalState from "state"
+import usePassages from "./usePassages"
 
 export type State =
   | { status: "loading" }
@@ -11,11 +11,10 @@ export type State =
 
 export default function usePassage(): { state: State; passage?: Passage } {
   let params = useParams<"passage">()
-  const global = useState(globalState)
+  const passages = usePassages()
   const state = useState({ status: "loading" } as State)
   const s = state.get()
 
-  const passages = global.passages.get()
   const passage = passages.find(p => p.id === params.passage)
 
   useEffect(() => {

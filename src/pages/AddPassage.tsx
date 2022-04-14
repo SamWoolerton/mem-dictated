@@ -4,53 +4,21 @@ import { v4 as uuidv4 } from "uuid"
 
 import { books, counts } from "constants/bible"
 import globalState from "state"
-import { isPassage } from "utility/guards"
+import { isValidPassage } from "utility/guards"
 import Tag from "components/Tag"
 import { Button, Page, PageHeading } from "components/Themed"
 
 const generateVerses = (n: number) => Array.from(Array(n)).map((_, i) => i + 1)
 
-type PartialPassage =
-  | {
-      selected: "book"
-      passage: {
-        id: string
-        book: null
-        chapter: null
-        startVerse: null
-        endVerse: null
-      }
-    }
-  | {
-      selected: "book" | "chapter"
-      passage: {
-        id: string
-        book: Book
-        chapter: null
-        startVerse: null
-        endVerse: null
-      }
-    }
-  | {
-      selected: "book" | "chapter" | "startVerse"
-      passage: {
-        id: string
-        book: Book
-        chapter: number
-        startVerse: null
-        endVerse: null
-      }
-    }
-  | {
-      selected: "book" | "chapter" | "startVerse" | "endVerse"
-      passage: {
-        id: string
-        book: Book
-        chapter: number
-        startVerse: number
-        endVerse: number
-      }
-    }
+type PartialPassage = {
+  selected: "book" | "chapter" | "startVerse" | "endVerse"
+  passage: Omit<Passage, "book" | "chapter" | "startVerse" | "endVerse"> & {
+    book: Book | null
+    chapter: number | null
+    startVerse: number | null
+    endVerse: number | null
+  }
+}
 
 export default function AddPassage() {
   const navigate = useNavigate()
@@ -59,17 +27,21 @@ export default function AddPassage() {
   const state = useState({
     selected: "book",
     passage: {
+      version: 2,
       id: uuidv4(),
       book: null as Book | null,
       chapter: null as number | null,
       startVerse: null as number | null,
       endVerse: null as number | null,
+      lastAttempted: new Date().toISOString(),
+      lastScore: 0,
+      secondsSincePreviousAttempt: 0,
     },
   } as PartialPassage)
 
   const s = state.get()
   const { passage } = s
-  const validPassage = isPassage(passage)
+  const validPassage = isValidPassage(passage)
   const selectedBookCounts = s.passage.book ? counts[s.passage.book] : []
   const verses =
     selectedBookCounts && s.passage.chapter
@@ -121,14 +93,6 @@ export default function AddPassage() {
             state.set(s => {
               // note explicit null check instead of coercion because 0 is a falsy number
               if (s.passage.book === null) return s
-
-              // only included because of TS limitations
-              if (s.passage.chapter === null)
-                return { selected: "chapter", passage: s.passage }
-              // only have to include this check because of TS limitations, and can't even include with the previous step
-              if (s.passage.startVerse === null)
-                return { selected: "chapter", passage: s.passage }
-
               return { selected: "chapter", passage: s.passage }
             })
           }
@@ -176,26 +140,36 @@ export default function AddPassage() {
         </div>
       </div>
 
-      {s.selected === "book" ? (
+      {s.selected === "startVerse" || s.selected === "endVerse" ? (
         <div className="flex flex-wrap my-2 -mx-2">
-          {books.map(book => (
-            <Tag
-              label={book}
-              onClick={() =>
-                state.set({
-                  selected: "chapter",
-                  passage: {
-                    ...s.passage,
-                    book,
-                    chapter: null,
-                    startVerse: null,
-                    endVerse: null,
-                  },
-                })
-              }
-              key={book}
-            />
-          ))}
+          {verses
+            .filter(v =>
+              s.selected === "endVerse"
+                ? v >= (s.passage.startVerse ?? 0)
+                : true
+            )
+            .map(verse => (
+              <Tag
+                label={String(verse)}
+                onClick={() =>
+                  state.set({
+                    selected: "endVerse",
+                    passage:
+                      s.selected === "endVerse"
+                        ? {
+                            ...s.passage,
+                            endVerse: verse,
+                          }
+                        : {
+                            ...s.passage,
+                            startVerse: verse,
+                            endVerse: verse,
+                          },
+                  })
+                }
+                key={verse}
+              />
+            ))}
         </div>
       ) : s.selected === "chapter" ? (
         <div className="flex flex-wrap my-2 -mx-2">
@@ -221,35 +195,26 @@ export default function AddPassage() {
             )
           })}
         </div>
-      ) : // shouldn't need this check as these are the only two options left anyway, but TS doesn't type-check without it
-      s.selected === "startVerse" || s.selected === "endVerse" ? (
+      ) : s.selected === "book" ? (
         <div className="flex flex-wrap my-2 -mx-2">
-          {verses
-            .filter(v =>
-              s.selected === "endVerse" ? v >= s.passage.startVerse : true
-            )
-            .map(verse => (
-              <Tag
-                label={String(verse)}
-                onClick={() =>
-                  state.set({
-                    selected: "endVerse",
-                    passage:
-                      s.selected === "endVerse"
-                        ? {
-                            ...s.passage,
-                            endVerse: verse,
-                          }
-                        : {
-                            ...s.passage,
-                            startVerse: verse,
-                            endVerse: verse,
-                          },
-                  })
-                }
-                key={verse}
-              />
-            ))}
+          {books.map(book => (
+            <Tag
+              label={book}
+              onClick={() =>
+                state.set({
+                  selected: "chapter",
+                  passage: {
+                    ...s.passage,
+                    book,
+                    chapter: null,
+                    startVerse: null,
+                    endVerse: null,
+                  },
+                })
+              }
+              key={book}
+            />
+          ))}
         </div>
       ) : null}
 

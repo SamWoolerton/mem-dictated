@@ -1,14 +1,13 @@
-import { useState } from "@hookstate/core"
 import { Link } from "react-router-dom"
 import { HiChevronDoubleRight } from "react-icons/hi"
 import { Detector } from "react-detect-offline"
 
-import globalState from "state"
+import usePassages from "hooks/usePassages"
 import { Card, LinkButton, LinkIconButton, Page } from "components/Themed"
 import { formatPassage } from "utility/domain"
 
 export default function ListPassages() {
-  const global = useState(globalState)
+  const passages = usePassages()
 
   return (
     <Page showBackButton={false}>
@@ -23,7 +22,7 @@ export default function ListPassages() {
       />
 
       <div>
-        {global.passages.get().map(p => (
+        {passages.map(p => (
           <Link key={p.id} to={`/passages/${p.id}`}>
             <Card
               style={{

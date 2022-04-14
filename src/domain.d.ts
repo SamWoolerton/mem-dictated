@@ -1,14 +1,30 @@
 type UUID = string
+type DateTime = string
 
 type Passage = {
+  version: 2
   id: UUID
   book: Book
   chapter: number
   startVerse: number
   endVerse: number
+  lastAttempted: DateTime
+  lastScore: number
+  secondsSincePreviousAttempt: number
 }
 
-type Version = "kjv"
+type PassageVersion =
+  | Passage
+  | {
+      version: 1
+      id: UUID
+      book: Book
+      chapter: number
+      startVerse: number
+      endVerse: number
+    }
+
+type Version = "esv"
 
 type Book =
   | "Genesis"
@@ -77,21 +93,3 @@ type Book =
   | "3 John"
   | "Jude"
   | "Revelation"
-
-type ChapterSection =
-  | {
-      type:
-        | "paragraph start"
-        | "paragraph end"
-        | "stanza start"
-        | "stanza end"
-        | "line break"
-        | "break"
-    }
-  | {
-      type: "paragraph text" | "line text"
-      chapterNumber: number
-      verseNumber: number
-      sectionNumber: number
-      value: string
-    }
