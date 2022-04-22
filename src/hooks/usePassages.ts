@@ -32,5 +32,10 @@ function hydratePassage(passage: PassageVersion): Passage {
     }
   }
 
-  return { ...coercedPassage }
+  if (!coercedPassage.lastAttemptAt) {
+    // new passages should always have today's date for next attempt (makes default list sort way nicer)
+    return { ...coercedPassage, nextAttemptAt: new Date().toISOString() }
+  }
+
+  return coercedPassage
 }
